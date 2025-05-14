@@ -22,9 +22,9 @@ var vowels = map[string]string{
 
 var consonants = map[string]string{
 	"க": "K",
-	"ச": "C",
-	"ட": "T",
-	"த": "D",
+	"ச": "S",
+	"ட": "D",
+	"த": "TH",
 	"ப": "P",
 	"ற": "TR",
 	"ங": "NG",
@@ -58,7 +58,7 @@ var modifiers = map[string]string{
 }
 var compounds = map[string]string{
 	"க்க": "K2",
-	"ச்ச": "C2",
+	"ச்ச": "CH",
 	"த்த": "D2",
 	"ப்ப": "P2",
 	"ல்ல": "L2",
@@ -82,18 +82,16 @@ var compounds = map[string]string{
 }
 
 var (
-	regexKey0, _        = regexp.Compile(`[1,2,4-9]`)
-	regexKey1, _        = regexp.Compile(`[2,4-9]`)
-	regexNonTamil, _    = regexp.Compile(`[\P{Tamil}]`)
-	regexAlphaNum, _    = regexp.Compile(`[^0-9A-Z]`)
-	regexSpecialCase, _ = regexp.Compile(`^(A|V|T|S|U|M|O)L(K|S)`)
+	regexKey0, _     = regexp.Compile(`[1-9]`)
+	regexKey1, _     = regexp.Compile(`[3-9]`)
+	regexNonTamil, _ = regexp.Compile(`[\P{Tamil}]`)
+	regexAlphaNum, _ = regexp.Compile(`[^0-9A-Z]`)
 )
 
 // TMphone is the Tamizh-phone tokenizer.
 type TMphone struct {
 	modCompounds  *regexp.Regexp
 	modConsonants *regexp.Regexp
-	modVowels     *regexp.Regexp
 }
 
 // New returns a new instance of the TMPhone tokenizer.
@@ -123,11 +121,11 @@ func New() *TMphone {
 	tm.modConsonants, _ = regexp.Compile(`((` + strings.Join(glyphs, "|") + `)(` + strings.Join(mods, "|") + `))`)
 
 	// vowels.
-	glyphs = []string{}
-	for k := range vowels {
-		glyphs = append(glyphs, k)
-	}
-	tm.modVowels, _ = regexp.Compile(`((` + strings.Join(glyphs, "|") + `)(` + strings.Join(mods, "|") + `))`)
+	// glyphs = []string{}
+	// for k := range vowels {
+	// 	glyphs = append(glyphs, k)
+	// }
+	// tm.modVowels, _ = regexp.Compile(`((` + strings.Join(glyphs, "|") + `)(` + strings.Join(mods, "|") + `))`)
 
 	return tm
 }
@@ -166,7 +164,8 @@ func (t *TMphone) process(input string) string {
 
 	// Replace and group modified consonants and vowels.
 	input = t.replaceModifiedGlyphs(input, consonants, t.modConsonants)
-	input = t.replaceModifiedGlyphs(input, vowels, t.modVowels)
+	//fmt.Println("Mod vowels:", t.modVowels)
+	// input = t.replaceModifiedGlyphs(input, vowels, t.modVowels)
 
 	// Replace and group unmodified consonants.
 	for k, v := range consonants {
