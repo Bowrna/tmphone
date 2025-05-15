@@ -17,7 +17,7 @@ Inspired by KNphone and MLPhone repository, TMPhone is a phonetic algorithm for 
 ### Go implementation
 
 Install the package:
-`go get -u github.com/knadh/knphone`
+`go get -u github.com/Bowrna/tmphone`
 
 ```go
 package main
@@ -25,13 +25,13 @@ package main
 import (
 	"fmt"
 
-	"github.com/knadh/knphone"
+	"github.com/Bowrna/tmphone"
 )
 
 func main() {
-	k := knphone.New()
-	fmt.Println(k.Encode("ಅಂಕೆಸಂಖ್ಯೆ"))
-	fmt.Println(k.Encode("ಊಱಿಸಾಱು"))
+	t := tmphone.New()
+	fmt.Println(t.Encode("திங்கள்"))
+	fmt.Println(t.Encode("சிப்பாய்"))
 }
 
 ```
