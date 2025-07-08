@@ -148,7 +148,7 @@ func (t *TMphone) Encode(input string) (string, string, string) {
 }
 
 func (t *TMphone) process(input string) string {
-	// Remove all non-malayalam characters.
+	// Remove all non-Tamizh characters.
 	input = regexNonTamil.ReplaceAllString(strings.Trim(input, ""), "")
 
 	// All character replacements are grouped between { and } to maintain
