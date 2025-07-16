@@ -16,7 +16,7 @@ func TestEncode(t *testing.T) {
 	// tmphone_test.go:24: For input தண்ணீர்  => got (THNR, THN2R, THN24R), want (, , )
 	// tmphone_test.go:24: For input திங்கள் => got (THNKL, THNKL1, TH4NKL1), want (, , )
 	tests := map[string][3]string{
-		"தமிழ்":      {"TML", "TM3L", "TM3L"},
+		"தமிழ்":      {"THMZH", "THMZH", "THM4ZH"},
 		"மிகவும்":    {"MKVM", "MKVM", "M4KV5M"},
 		"சிப்பாய்":   {"SPY", "SP2Y", "S4P23Y"},
 		"தண்ணீர் ":   {"THNR", "THN2R", "THN24R"},
@@ -25,6 +25,9 @@ func TestEncode(t *testing.T) {
 		"மோர்":       {"MR", "MR", "M8R"},
 		"வௌவால்":     {"VVL", "VVL", "V9V3L"},
 		"அங்காடி":    {"ANKD", "ANKD", "ANK3D4"},
+		"வாழ்":       {"VZH", "VZH", "V3ZH"},
+		"வால்":       {"VL", "VL", "V3L"},
+		"வாள்":       {"VL", "VL1", "V3L1"},
 	}
 
 	for input, expected := range tests {
